@@ -11,5 +11,6 @@ func SetupRoutes(app *fiber.App) {
 	// Routes that require authentication middleware
 	api := app.Group("/v1")
 	api.Get("/ping", handlers.Ping)
+	api.Post("/signup", handlers.Signup)
 
 }

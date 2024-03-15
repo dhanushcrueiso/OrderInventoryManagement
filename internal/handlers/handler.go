@@ -1,11 +1,14 @@
 package handlers
 
 import (
+	"OrderInventoryManagement/internal/dtos"
 	"OrderInventoryManagement/internal/services"
 	"fmt"
 	"log"
+	"net/http"
 
 	"github.com/gofiber/fiber"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func Ping(c *fiber.Ctx) {
@@ -17,4 +20,22 @@ func Ping(c *fiber.Ctx) {
 		log.Fatalln("unable to fetch data ")
 	}
 
+}
+
+func Signup(c *fiber.Ctx) {
+	var user dtos.User
+	if err := c.BodyParser(&user); err != nil {
+		return
+	}
+
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+	if err != nil {
+		return
+	}
+	user.Password = string(hashedPassword)
+
+	if err := services.SaveUser(c, user); err != nil {
+		return
+	}
+	c.JSON(dtos.Response{Code: http.StatusOK, Message: "signup successfull"})
 }

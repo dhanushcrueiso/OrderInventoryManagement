@@ -7,6 +7,9 @@ github.com/gofiber/fiber
 # github.com/gofiber/utils v0.0.10
 ## explicit; go 1.11
 github.com/gofiber/utils
+# github.com/google/uuid v1.6.0
+## explicit
+github.com/google/uuid
 # github.com/gorilla/schema v1.1.0
 ## explicit
 github.com/gorilla/schema

@@ -55,18 +55,18 @@ func New() *DBConn {
 	}
 }
 
-//not needed as of now , might require in furture toh
-// type Args struct {
-// 	cnt  int
-// 	vals []interface{}
-// }
+// not needed as of now , might require in furture toh
+type Args struct {
+	cnt  int
+	vals []interface{}
+}
 
-// func (a *Args) Append(v interface{}) string {
-// 	a.cnt++
-// 	a.vals = append(a.vals, v)
-// 	return "?"
-// }
+func (a *Args) Append(v interface{}) string {
+	a.cnt++
+	a.vals = append(a.vals, v)
+	return "?"
+}
 
-// func (a *Args) Vals() []interface{} {
-// 	return a.vals
-// }
+func (a *Args) Vals() []interface{} {
+	return a.vals
+}

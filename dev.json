@@ -1,13 +1,12 @@
 {
     "env": "dev",
     "app_name": "order-management",
-    "port": "3000",
+    "port": "3007",
     "database_url": "postgresql://postgres:postgres@localhost:5432/order_management?sslmode=disable",
     "max_db_conn": 5,
     "log_level": "DEBUG",
     "token_len": 256,
     "token_expiry": 7776000,
-    "service_token": "servicetoken",
-    "url": "http://localhost:3000"
+    "service_token": "servicetoken"
   }
   

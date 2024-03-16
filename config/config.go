@@ -17,7 +17,6 @@ type Config struct {
 	TokenLen     int    `json:"token_len"`
 	TokenExpiry  int    `json:"token_expiry"`
 	ServiceToken string `json:"service_token"`
-	Url          string `json:"url"`
 }
 
 func ParseJSON(r io.Reader, v any) error {

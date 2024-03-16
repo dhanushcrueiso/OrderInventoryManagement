@@ -42,8 +42,9 @@ func Login(c *fiber.Ctx) {
 	}
 	fmt.Println("checking the parser", user)
 
-	if err := services.Login(c, user); err != nil {
+	res, err := services.Login(c, user)
+	if err != nil {
 		return
 	}
-	c.JSON(dtos.Response{Code: http.StatusOK, Message: "login successfull"})
+	c.JSON(dtos.Login{AccountInfo: *res, Code: http.StatusOK, Message: "login successfull"})
 }

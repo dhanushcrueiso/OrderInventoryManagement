@@ -43,11 +43,11 @@ func SaveUser(c *fiber.Ctx, req dtos.User) error {
 	return nil
 }
 
-func Login(c *fiber.Ctx, req dtos.User) error {
+func Login(c *fiber.Ctx, req dtos.User) (*dtos.LoginRes, error) {
 
 	account, err := daos.GetAccount(c, req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	aid := account.ID
 	genToken, _ := GetAccessAndRefreshToken(globals.TokenLen)
@@ -59,10 +59,19 @@ func Login(c *fiber.Ctx, req dtos.User) error {
 	}
 	err = daos.UpsertToken(token)
 	if err != nil {
-		return err
+		return nil, err
 	}
-
-	return nil
+	res := dtos.LoginRes{
+		ID:       aid,
+		Username: account.Username,
+		Name:     account.Name,
+		Password: "",
+		Email:    account.Email,
+		Mobile:   account.Email,
+		Role:     account.Role,
+		Token:    genToken,
+	}
+	return &res, nil
 
 }
 

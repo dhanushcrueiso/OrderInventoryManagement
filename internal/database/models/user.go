@@ -1,6 +1,10 @@
 package models
 
-import "github.com/google/uuid"
+import (
+	"time"
+
+	"github.com/google/uuid"
+)
 
 type User struct {
 	ID       uuid.UUID `gorm:"primaryKey"`
@@ -10,4 +14,15 @@ type User struct {
 	Role     string    `gorm:"default:user"`
 	Mobile   string
 	Name     string
+}
+
+type Account struct {
+	ID        uuid.UUID
+	Username  string
+	Password  string
+	Email     string
+	Role      string
+	Mobile    string
+	Name      string
+	ExpiresAt time.Time
 }

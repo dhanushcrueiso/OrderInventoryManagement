@@ -227,12 +227,15 @@ var defaultErrorHandler = func(ctx *Ctx, err error) {
 }
 
 // New creates a new Fiber named instance.
-//  myApp := app.New()
+//
+//	myApp := app.New()
+//
 // You can pass an optional settings by passing a *Settings struct:
-//  myApp := app.New(&fiber.Settings{
-//      Prefork: true,
-//      ServerHeader: "Fiber",
-//  })
+//
+//	myApp := app.New(&fiber.Settings{
+//	    Prefork: true,
+//	    ServerHeader: "Fiber",
+//	})
 func New(settings ...*Settings) *App {
 	// Create a new app
 	app := &App{
@@ -284,9 +287,9 @@ func New(settings ...*Settings) *App {
 // Middleware matches requests beginning with the provided prefix.
 // Providing a prefix is optional, it defaults to "/".
 //
-//  app.Use(handler)
-//  app.Use("/api", handler)
-//  app.Use("/api", handler, handler)
+//	app.Use(handler)
+//	app.Use("/api", handler)
+//	app.Use("/api", handler, handler)
 func (app *App) Use(args ...interface{}) Router {
 	var prefix string
 	var handlers []Handler
@@ -406,9 +409,10 @@ func NewError(code int, message ...string) *Error {
 }
 
 // Routes returns all registered routes
-//  for _, r := range app.Routes() {
-//  	fmt.Printf("%s\t%s\n", r.Method, r.Path)
-//  }
+//
+//	for _, r := range app.Routes() {
+//		fmt.Printf("%s\t%s\n", r.Method, r.Path)
+//	}
 func (app *App) Routes() []*Route {
 	fmt.Println("routes is deprecated since v1.13.2, please use `app.Stack()` to access the raw router stack")
 	routes := make([]*Route, 0)
@@ -450,10 +454,10 @@ func (app *App) Listener(ln net.Listener, tlsconfig ...*tls.Config) error {
 // Listen serves HTTP requests from the given addr or port.
 // You can pass an optional *tls.Config to enable TLS.
 //
-//  app.Listen(8080)
-//  app.Listen("8080")
-//  app.Listen(":8080")
-//  app.Listen("127.0.0.1:8080")
+//	app.Listen(8080)
+//	app.Listen("8080")
+//	app.Listen(":8080")
+//	app.Listen("127.0.0.1:8080")
 func (app *App) Listen(address interface{}, tlsconfig ...*tls.Config) error {
 	// Convert address to string
 	addr, ok := address.(string)

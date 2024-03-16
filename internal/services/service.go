@@ -1,14 +1,18 @@
 package services
 
 import (
+	"OrderInventoryManagement/config"
+	globals "OrderInventoryManagement/constants"
 	"OrderInventoryManagement/internal/database/daos"
 	"OrderInventoryManagement/internal/dtos"
 	"fmt"
+	"time"
 
 	"OrderInventoryManagement/internal/database/models"
 
 	"github.com/gofiber/fiber"
 	"github.com/google/uuid"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func CheckName(c *fiber.Ctx, req string) error {
@@ -22,6 +26,12 @@ func CheckName(c *fiber.Ctx, req string) error {
 }
 
 func SaveUser(c *fiber.Ctx, req dtos.User) error {
+
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
+	if err != nil {
+		return nil
+	}
+	req.Password = string(hashedPassword)
 	daoReq, err := DtosToDao(req)
 	if err != nil {
 		return err
@@ -33,6 +43,29 @@ func SaveUser(c *fiber.Ctx, req dtos.User) error {
 	return nil
 }
 
+func Login(c *fiber.Ctx, req dtos.User) error {
+
+	account, err := daos.GetAccount(c, req)
+	if err != nil {
+		return err
+	}
+	aid := account.ID
+	genToken, _ := GetAccessAndRefreshToken(globals.TokenLen)
+	token := models.Token{
+		Id:         uuid.New(),
+		Token:      genToken,
+		AccountId:  aid,
+		Expires_At: time.Now().Add(time.Duration(config.Get().TokenExpiry) * time.Second),
+	}
+	err = daos.UpsertToken(token)
+	if err != nil {
+		return err
+	}
+
+	return nil
+
+}
+
 func DtosToDao(req dtos.User) (models.User, error) {
 
 	return models.User{
@@ -40,7 +73,8 @@ func DtosToDao(req dtos.User) (models.User, error) {
 		Username: req.Username,
 		Password: req.Password,
 		Email:    req.Email,
-		Role:     req.Role,
+		Role:     globals.RoleExecutive,
 		Mobile:   req.Mobile,
+		Name:     req.Name,
 	}, nil
 }

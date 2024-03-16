@@ -8,7 +8,6 @@ import (
 	"net/http"
 
 	"github.com/gofiber/fiber"
-	"golang.org/x/crypto/bcrypt"
 )
 
 func Ping(c *fiber.Ctx) {
@@ -23,19 +22,28 @@ func Ping(c *fiber.Ctx) {
 }
 
 func Signup(c *fiber.Ctx) {
+	fmt.Println("here:")
 	var user dtos.User
 	if err := c.BodyParser(&user); err != nil {
 		return
 	}
-
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
-	if err != nil {
-		return
-	}
-	user.Password = string(hashedPassword)
+	fmt.Println("checking the parser", user)
 
 	if err := services.SaveUser(c, user); err != nil {
 		return
 	}
 	c.JSON(dtos.Response{Code: http.StatusOK, Message: "signup successfull"})
+}
+
+func Login(c *fiber.Ctx) {
+	var user dtos.User
+	if err := c.BodyParser(&user); err != nil {
+		return
+	}
+	fmt.Println("checking the parser", user)
+
+	if err := services.Login(c, user); err != nil {
+		return
+	}
+	c.JSON(dtos.Response{Code: http.StatusOK, Message: "login successfull"})
 }

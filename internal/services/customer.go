@@ -100,6 +100,20 @@ func PlaceOrder(c *fiber.Ctx, req []dtos.Product, customerId uuid.UUID) (string,
 	return orderId, nil
 }
 
+func GetAllOrders(c *fiber.Ctx, customerId uuid.UUID) (*map[string][]dtos.Order, error) {
+	res := make(map[string][]dtos.Order)
+
+	orders, err := daos.GetAllOrdersWithCustomerId(c, customerId)
+	if err != nil {
+		return nil, err
+	}
+
+	for _, order := range orders {
+		res[order.OrderId] = append(res[order.OrderId], order)
+	}
+	return &res, nil
+}
+
 func CustomerDtosToDao(req dtos.Customer) (models.Customer, error) {
 
 	return models.Customer{

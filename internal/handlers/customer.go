@@ -53,3 +53,13 @@ func PlaceOrder(c *fiber.Ctx) {
 	c.JSON(dtos.Login{Code: http.StatusOK, Message: mes})
 
 }
+
+func GetAllOrders(c *fiber.Ctx) {
+
+	cid, _ := uuid.Parse(c.Params("cid"))
+	res, err := services.GetAllOrders(c, cid)
+	if err != nil {
+		return
+	}
+	c.JSON(res)
+}

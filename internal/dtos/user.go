@@ -22,3 +22,9 @@ type LoginRes struct {
 	Role     string    `json:"role"`
 	Token    string    `json:"token"`
 }
+
+type ProductQuantity struct {
+	ProductID            uuid.UUID
+	Name                 string
+	TotalQuantityOrdered int
+}

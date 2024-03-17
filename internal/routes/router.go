@@ -21,5 +21,6 @@ func SetupRoutes(app *fiber.App) {
 	api.Put("/admin/:aid/product", validateToken, handlers.AddProducts)
 	api.Post("/customer/:cid/placeorder", validateToken, handlers.PlaceOrder)
 	api.Get("/customer/:cid/getallorder", validateToken, handlers.GetAllOrders)
+	api.Get("/admins/produt-analytics", validateToken, handlers.MostSoldProducts)
 
 }

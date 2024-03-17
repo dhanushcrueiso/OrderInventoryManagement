@@ -13,7 +13,12 @@ import (
 
 func GetAll(c *fiber.Ctx) ([]*models.Product, error) {
 	products := []*models.Product{}
-	err := db.DB.Unscoped().Debug().Table("products p").Select("p.id,p.name,p.description,p.price,i.quantity").Joins("JOIN inventory i on p.id = i.product_id").Scan(&products).Error
+	q := db.DB.Unscoped().Debug().Table("products p").Select("p.id,p.name,p.description,p.price,i.quantity").Joins("JOIN inventory i on p.id = i.product_id")
+	if c.Query("q") != "" {
+		q.Where("p.name ilike ?", c.Query("q")+"%")
+	}
+
+	err := q.Scan(&products).Error
 	if err != nil {
 		return nil, err
 	}

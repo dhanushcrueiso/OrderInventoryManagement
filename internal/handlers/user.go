@@ -48,3 +48,12 @@ func Login(c *fiber.Ctx) {
 	}
 	c.JSON(dtos.Login{AccountInfo: *res, Code: http.StatusOK, Message: "login successfull"})
 }
+
+func MostSoldProducts(c *fiber.Ctx) {
+
+	res, err := services.MostSoldProducts(c)
+	if err != nil {
+		return
+	}
+	c.JSON(res)
+}

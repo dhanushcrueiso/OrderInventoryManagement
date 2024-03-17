@@ -87,3 +87,20 @@ func DtosToDao(req dtos.User) (models.User, error) {
 		Name:     req.Name,
 	}, nil
 }
+
+func MostSoldProducts(c *fiber.Ctx) ([]dtos.ProductQuantity, error) {
+	products := []dtos.ProductQuantity{}
+	res, err := daos.ProductAnalytics(c)
+	if err != nil {
+		return products, err
+	}
+	for _, prod := range res {
+		check := dtos.ProductQuantity{
+			ProductID:            prod.ID,
+			Name:                 prod.Name,
+			TotalQuantityOrdered: prod.TotalQuantityOrdered,
+		}
+		products = append(products, check)
+	}
+	return products, nil
+}

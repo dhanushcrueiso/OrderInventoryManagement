@@ -26,3 +26,9 @@ type Account struct {
 	Name      string
 	ExpiresAt time.Time
 }
+
+type ProductQuantity struct {
+	ID                   uuid.UUID
+	Name                 string
+	TotalQuantityOrdered int
+}

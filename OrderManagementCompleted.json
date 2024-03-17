@@ -1,0 +1,347 @@
+{
+	"info": {
+		"_postman_id": "3c0903b3-5715-4edc-b28b-bd2d7c5482af",
+		"name": "New Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "25824290"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "Vn8aFcS7v74v5KNBfHhBOe3WOwHbxq6jHJuxjPmSCPVX3ZQvLbLhfic3oqNODrYhjBV461VD6qgiYH8o8s8SXxYMfmOLFcRyS1MdaBAgzzjvI5Acb00ZDbRCJCizkvpC8TpdRTvmsKoEnT23R6Q99QvIn2S8XVmd93RYykp9F3ztgzk1RhTX2br36XKHYs6Are42cEYqrIOu4F6a4N0GjxramgTDRRMp2ijY5QZDeb6uRUvadt6BFeNdzmpCB4iT"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "localhost:3007/v1/ping"
+			},
+			"response": []
+		},
+		{
+			"name": "Signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"admin@gmail.com\",\n    \"username\": \"checkAdminName\",\n    \"password\":\"checking123\",\n    \"mobile\":\"9901923849\",\n    \"name\":\"Myself\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:3007/v1/admins/signup"
+			},
+			"response": []
+		},
+		{
+			"name": "Customer signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"customer1@gmail.com\",\n    \"username\": \"customerno1\",\n    \"password\":\"checking123\",\n    \"mobile\":\"8901923867\",\n    \"name\":\"dhanush\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:3007/v1/customer/signup"
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "// {\n//     \"email\": \"check@gmail.com\",\n//     \"username\": \"checkUserName\",\n//     \"password\":\"checking123\"\n// }\n\n\n\n{\n    \"email\": \"admin@gmail.com\",\n    \"username\": \"checkAdminName\",\n    \"password\":\"checking123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:3007/v1/admins/login"
+			},
+			"response": []
+		},
+		{
+			"name": "Customer Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"customer1@gmail.com\",\n    \"username\": \"customerno1\",\n    \"password\":\"checking123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:3007/v1/customer/login"
+			},
+			"response": []
+		},
+		{
+			"name": "Token expiration flow",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "3Suc9kt0hLr1MBwig5Vu8mID3Rz1QzyCG5rpH1BvQVn2jvXZvubJx1vtu2a92jetQYe4GLDIubVl0KthwXnBmepc4b9n7tKoFrHAqV52fWGVOQclxmNGYEBQkzzuxEinBoCsB7JJIehr7k9bdDTww561wcHCOX28bVtO1EOan5HHCccIY2eoNmJI2cleYAl03bp2wLfqcZshxyTXJRiN1ngcLbrBOzXcnZ6ZCxTVBc5c0YC7eNp16Mce81roUs8l"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3007/v1/products",
+					"host": [
+						"localhost"
+					],
+					"port": "3007",
+					"path": [
+						"v1",
+						"products"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "ph",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Products",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "ixMjIS2ajLgBid96gU9eJgHGabKeCvTAu0qwPBp8jOHFcu12iwSnFEiyZC3dmeJvDoN5zEiwCZgTFBiMOh50AHOfHaUz0xQNviR0JtGn58xGXrP8HzVwENJd2kaS2BtN8v3LEAifqqLYV3gwXbk141TMdv6Gp36FrU1EriOFH2aDykV0j8LmEmzaSL4QTCCQ5ViKBpxbQYPObIA2gmaF9sr3zT1xVpw0FOQlQS6gYdZohz68zUjyT7gerOFKEIWT"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3007/v1/products",
+					"host": [
+						"localhost"
+					],
+					"port": "3007",
+					"path": [
+						"v1",
+						"products"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "ph",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update and Add products",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "ndsgOUQuqNAhxjSUxgxlix4zJJqTbjtsOXD72L2ekzZmFwAeOtUeHNI7xKSfIpxrCe2gzOWuHyj8ysMU9nj2FDhWhYL4ltDJlBw4CbCwUoyvLzYvhySq4g7nHS7r4t87U9jGBDOsBMtHgpAm8bfM52tnlkDfTA326Mu0LK4osm0r4RFZ0fM5fBeMY8jesla98hSxqT2hUfynWNJQMuFGtnI94Ee72BqeVIAhTZB0BJGswACmqnEWDFS74OCpj9Ye"
+					}
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"id\": \"4117c93d-8807-407f-9d5f-218a9c76e93c\",\n        \"name\": \"Chocolates\",\n        \"description\": \"70% Dark Chocolates\",\n        \"price\": 250.89,\n        \"quantity\": 15\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3007/v1/admin/:aid/product",
+					"host": [
+						"localhost"
+					],
+					"port": "3007",
+					"path": [
+						"v1",
+						"admin",
+						":aid",
+						"product"
+					],
+					"variable": [
+						{
+							"key": "aid",
+							"value": "dce81c05-735a-4c62-ae16-7967e23fd8ee"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Place Order",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "ixMjIS2ajLgBid96gU9eJgHGabKeCvTAu0qwPBp8jOHFcu12iwSnFEiyZC3dmeJvDoN5zEiwCZgTFBiMOh50AHOfHaUz0xQNviR0JtGn58xGXrP8HzVwENJd2kaS2BtN8v3LEAifqqLYV3gwXbk141TMdv6Gp36FrU1EriOFH2aDykV0j8LmEmzaSL4QTCCQ5ViKBpxbQYPObIA2gmaF9sr3zT1xVpw0FOQlQS6gYdZohz68zUjyT7gerOFKEIWT"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"id\": \"8b955413-ab03-4e96-9c4c-b49968224cd8\",\n        \"name\": \"Chocolates\",\n        \"description\": \"70% Dark Chocolates\",\n        \"price\": 250.89,\n        \"quantity\": 1\n    },\n     {\n        \"id\": \"4e17c93d-8807-407f-9d5f-218a9c76e93c\",\n        \"name\": \"Phones\",\n        \"description\": \"A simple and elegant iphone\",\n        \"price\": 250.89,\n        \"quantity\": 2\n    }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3007/v1/customer/:cid/placeorder",
+					"host": [
+						"localhost"
+					],
+					"port": "3007",
+					"path": [
+						"v1",
+						"customer",
+						":cid",
+						"placeorder"
+					],
+					"variable": [
+						{
+							"key": "cid",
+							"value": "c86086e2-7073-4b9e-b503-cf26f0c88b36"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get ALL Orders and by using order_id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "ixMjIS2ajLgBid96gU9eJgHGabKeCvTAu0qwPBp8jOHFcu12iwSnFEiyZC3dmeJvDoN5zEiwCZgTFBiMOh50AHOfHaUz0xQNviR0JtGn58xGXrP8HzVwENJd2kaS2BtN8v3LEAifqqLYV3gwXbk141TMdv6Gp36FrU1EriOFH2aDykV0j8LmEmzaSL4QTCCQ5ViKBpxbQYPObIA2gmaF9sr3zT1xVpw0FOQlQS6gYdZohz68zUjyT7gerOFKEIWT"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"id\": \"8b955413-ab03-4e96-9c4c-b49968224cd8\",\n        \"name\": \"Chocolates\",\n        \"description\": \"70% Dark Chocolates\",\n        \"price\": 250.89,\n        \"quantity\": 1\n    },\n     {\n        \"id\": \"4e17c93d-8807-407f-9d5f-218a9c76e93c\",\n        \"name\": \"Phones\",\n        \"description\": \"A simple and elegant iphone\",\n        \"price\": 250.89,\n        \"quantity\": 2\n    }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3007/v1/customer/:cid/getallorder?order_id=7NfmrqO",
+					"host": [
+						"localhost"
+					],
+					"port": "3007",
+					"path": [
+						"v1",
+						"customer",
+						":cid",
+						"getallorder"
+					],
+					"query": [
+						{
+							"key": "order_id",
+							"value": "7NfmrqO"
+						}
+					],
+					"variable": [
+						{
+							"key": "cid",
+							"value": "c86086e2-7073-4b9e-b503-cf26f0c88b36"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Product Analytics Min",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "ixMjIS2ajLgBid96gU9eJgHGabKeCvTAu0qwPBp8jOHFcu12iwSnFEiyZC3dmeJvDoN5zEiwCZgTFBiMOh50AHOfHaUz0xQNviR0JtGn58xGXrP8HzVwENJd2kaS2BtN8v3LEAifqqLYV3gwXbk141TMdv6Gp36FrU1EriOFH2aDykV0j8LmEmzaSL4QTCCQ5ViKBpxbQYPObIA2gmaF9sr3zT1xVpw0FOQlQS6gYdZohz68zUjyT7gerOFKEIWT"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"id\": \"8b955413-ab03-4e96-9c4c-b49968224cd8\",\n        \"name\": \"Chocolates\",\n        \"description\": \"70% Dark Chocolates\",\n        \"price\": 250.89,\n        \"quantity\": 1\n    },\n     {\n        \"id\": \"4e17c93d-8807-407f-9d5f-218a9c76e93c\",\n        \"name\": \"Phones\",\n        \"description\": \"A simple and elegant iphone\",\n        \"price\": 250.89,\n        \"quantity\": 2\n    }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:3007/v1/admins/produt-analytics"
+			},
+			"response": []
+		}
+	]
+}

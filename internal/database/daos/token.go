@@ -20,20 +20,22 @@ func UpsertToken(req models.Token) error {
 }
 
 func GetAccountByToken(token string) (*models.Account, error) {
-	fmt.Println("check daos")
+	fmt.Println("check daos", token)
 	res := models.Account{}
 	tokenres := models.Token{}
-	err := db.DB.Unscoped().Table("tokens").Take(&tokenres).Where("token =?", token).Order("expired_at DESC").Error
+	//fetching account by using token if token is generated
+	err := db.DB.Unscoped().Debug().Table("tokens").Where("token =?", token).First(&tokenres).Error
 	if err != nil {
 		return nil, errors.New("failed to get account using tokens")
 	}
-	fmt.Println("check 1")
+	fmt.Println("check 1", tokenres)
 	cus := models.Customer{}
+	//fetching the customer of admin based on the id
 	err = db.DB.Unscoped().Table("customers").Where("id =?", tokenres.AccountId).Take(&cus).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
 		return nil, errors.New("failed to get account using tokens")
 	}
-	fmt.Println("check 2")
+	fmt.Println("check 2", cus)
 	user := models.User{}
 	err = db.DB.Unscoped().Table("users").Where("id =?", tokenres.AccountId).Take(&user).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
@@ -44,11 +46,13 @@ func GetAccountByToken(token string) (*models.Account, error) {
 		res.Email = cus.Email
 		res.Username = cus.Username
 		res.ID = cus.ID
+		res.ExpiresAt = tokenres.Expires_At
 	}
 	if user.ID != uuid.Nil && user.Username != "" {
 		res.Email = user.Email
 		res.Username = user.Username
 		res.ID = user.ID
+		res.ExpiresAt = tokenres.Expires_At
 	}
 
 	return &res, nil

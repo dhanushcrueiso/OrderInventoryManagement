@@ -26,7 +26,7 @@ func Init(config *Config) error {
 			log.Println("Unable to open postges connection. Err:", err)
 			return err
 		}
-
+		//fetching max connections and lifetime and all the other config variables from dev.json and mapping it with config
 		sqlDB.SetMaxIdleConns(config.MaxDBConn)
 		sqlDB.SetMaxOpenConns(config.MaxDBConn)
 		sqlDB.SetConnMaxLifetime(time.Hour)
@@ -56,6 +56,7 @@ func New() *DBConn {
 }
 
 // not needed as of now , might require in furture toh
+// adding args which will be used in sql queries
 type Args struct {
 	cnt  int
 	vals []interface{}

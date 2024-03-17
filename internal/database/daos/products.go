@@ -13,6 +13,7 @@ import (
 
 func GetAll(c *fiber.Ctx) ([]*models.Product, error) {
 	products := []*models.Product{}
+	//fetching products along with available quantity from inventory
 	q := db.DB.Unscoped().Debug().Table("products p").Select("p.id,p.name,p.description,p.price,i.quantity").Joins("JOIN inventory i on p.id = i.product_id")
 	if c.Query("q") != "" {
 		q.Where("p.name ilike ?", c.Query("q")+"%")
@@ -30,12 +31,13 @@ func Upsert(c *fiber.Ctx, req models.Product) (uuid.UUID, error) {
 	check := models.Product{}
 	var pid = uuid.Nil
 	updateprod := models.ProductUpdate{}
+	//checking if the product with id already exists
 	err := db.DB.Unscoped().Table("products").Where("id =?", req.ID).First(&check).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
 		return pid, err
 	}
 	if err == nil {
-
+		//if exists then we update the data
 		updateprod.ID = check.ID
 		pid = updateprod.ID
 		updateprod.Description = req.Description
@@ -48,6 +50,7 @@ func Upsert(c *fiber.Ctx, req models.Product) (uuid.UUID, error) {
 		return pid, nil
 
 	}
+	//if it does not exists we create a new row of data
 	updateprod.ID = uuid.New()
 	updateprod.Description = req.Description
 	updateprod.Name = req.Name
@@ -78,6 +81,7 @@ func UpdateInventory(c *fiber.Ctx, req models.Inventory, update string) error {
 		return nil
 	}
 	if err == nil && update == "subtract" {
+		//checking if the update == subtract which basically means order is being placed and inventory item needs to be subtracted
 		fmt.Println("inside check ", check)
 		fmt.Println("inside req", req)
 

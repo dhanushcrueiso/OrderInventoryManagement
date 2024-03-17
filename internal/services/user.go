@@ -26,7 +26,7 @@ func CheckName(c *fiber.Ctx, req string) error {
 }
 
 func SaveUser(c *fiber.Ctx, req dtos.User) error {
-
+	//generting hash for saving password
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
 	if err != nil {
 		return nil

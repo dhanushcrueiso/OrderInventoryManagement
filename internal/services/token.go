@@ -12,6 +12,7 @@ func RandStringBytes(n int) string {
 	return string(b)
 }
 
+// making our own acess token , by using ranstirn to generate random byt string of length 256
 func GetAccessAndRefreshToken(l int) (string, string) {
 	accessToken := RandStringBytes(l)
 	refreshToken := RandStringBytes(l)

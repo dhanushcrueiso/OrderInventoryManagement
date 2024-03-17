@@ -37,6 +37,7 @@ func CustomerLogin(c *fiber.Ctx, req dtos.Customer) (*dtos.LoginRes, error) {
 		return nil, err
 	}
 	aid := account.ID
+	//call to generate token
 	genToken, _ := GetAccessAndRefreshToken(globals.TokenLen)
 	token := models.Token{
 		Id:         uuid.New(),
@@ -66,6 +67,7 @@ func PlaceOrder(c *fiber.Ctx, req []dtos.Product, customerId uuid.UUID) (string,
 	orderReq := []models.Order{}
 	inventoryUpdate := []models.Inventory{}
 	Id := uuid.New()
+	//generating order id
 	orderId, _ := GetAccessAndRefreshToken(globals.OrderIdLen)
 	for _, product := range req {
 		order := models.Order{
@@ -86,7 +88,7 @@ func PlaceOrder(c *fiber.Ctx, req []dtos.Product, customerId uuid.UUID) (string,
 		}
 		inventoryUpdate = append(inventoryUpdate, invent)
 	}
-
+	//upserting to order table and also updating the inventory via the subtract key word
 	err := daos.UpsertOrders(orderReq)
 	if err != nil {
 		return "", err

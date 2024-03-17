@@ -28,7 +28,7 @@ func AddProducts(c *fiber.Ctx, req dtos.Product) error {
 	if err != nil {
 		return err
 	}
-
+	//using add as key word, so it does not subtract which updating
 	err = daos.UpdateInventory(c, models.Inventory{
 		ID:          uuid.New(),
 		ProductID:   pid,

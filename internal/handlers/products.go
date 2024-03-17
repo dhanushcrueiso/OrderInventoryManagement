@@ -24,6 +24,7 @@ func AddProducts(c *fiber.Ctx) {
 		return
 	}
 	fmt.Println("checking the parser", req)
+	//checking if the user is admin to allow him to add products
 	aid, _ := uuid.Parse(c.Params("aid"))
 	admin, err := daos.GetAccountById(c, dtos.User{ID: aid})
 	if err != nil {

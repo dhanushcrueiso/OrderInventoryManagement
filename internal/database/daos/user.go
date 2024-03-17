@@ -42,6 +42,7 @@ func GetAccountById(c *fiber.Ctx, req dtos.User) (*models.User, error) {
 }
 
 func ProductAnalytics(c *fiber.Ctx) ([]models.ProductQuantity, error) {
+	//joining order with products to fetch the  most ordered top 10 products
 	res := []models.ProductQuantity{}
 	err := db.DB.Unscoped().Debug().Table("orders").Select("products.id, products.name, SUM(orders.quantity_ordered) AS total_quantity_ordered").
 		Joins("JOIN products ON orders.product_id = products.id").

@@ -12,3 +12,6 @@ Backend Task for Trademarkia
 Testing Via Postman
 ==> use postman or any other to hit the apis and test, will be adding a .json file of postman collection and responses 
 ==> Directly import the json postman collection and enjoy
+
+
+Also will be adding snapshots of the whole postman collection responses 

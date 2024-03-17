@@ -61,6 +61,45 @@ func CustomerLogin(c *fiber.Ctx, req dtos.Customer) (*dtos.LoginRes, error) {
 
 	return &res, nil
 }
+
+func PlaceOrder(c *fiber.Ctx, req []dtos.Product, customerId uuid.UUID) (string, error) {
+	orderReq := []models.Order{}
+	inventoryUpdate := []models.Inventory{}
+	Id := uuid.New()
+	orderId, _ := GetAccessAndRefreshToken(globals.OrderIdLen)
+	for _, product := range req {
+		order := models.Order{
+			CustomerID:      customerId,
+			ID:              Id,
+			ProductID:       product.ID,
+			QuantityOrdered: product.Quantity,
+			TotalPrice:      product.Price * float64(product.Quantity),
+			OrderId:         orderId,
+			OrderDate:       time.Now(),
+		}
+		orderReq = append(orderReq, order)
+
+		invent := models.Inventory{
+			ProductID:   product.ID,
+			Quantity:    product.Quantity,
+			LastUpdated: time.Now(),
+		}
+		inventoryUpdate = append(inventoryUpdate, invent)
+	}
+
+	err := daos.UpsertOrders(orderReq)
+	if err != nil {
+		return "", err
+	}
+	for _, inv := range inventoryUpdate {
+		err := daos.UpdateInventory(c, inv, "subtract")
+		if err != nil {
+			return "", err
+		}
+	}
+	return orderId, nil
+}
+
 func CustomerDtosToDao(req dtos.Customer) (models.Customer, error) {
 
 	return models.Customer{

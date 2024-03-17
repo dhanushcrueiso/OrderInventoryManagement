@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/gofiber/fiber"
+	"github.com/google/uuid"
 )
 
 func CustomerSignup(c *fiber.Ctx) {
@@ -35,4 +36,20 @@ func CustomerLogin(c *fiber.Ctx) {
 		return
 	}
 	c.JSON(dtos.Login{AccountInfo: *res, Code: http.StatusOK, Message: "login successfull"})
+}
+
+func PlaceOrder(c *fiber.Ctx) {
+	var products []dtos.Product
+
+	if err := c.BodyParser(&products); err != nil {
+		return
+	}
+	cid, _ := uuid.Parse(c.Params("cid"))
+	res, err := services.PlaceOrder(c, products, cid)
+	if err != nil {
+		return
+	}
+	mes := fmt.Sprintf("order places with order id %s", res)
+	c.JSON(dtos.Login{Code: http.StatusOK, Message: mes})
+
 }

@@ -46,7 +46,7 @@ func ProductAnalytics(c *fiber.Ctx) ([]models.ProductQuantity, error) {
 	err := db.DB.Unscoped().Debug().Table("orders").Select("products.id, products.name, SUM(orders.quantity_ordered) AS total_quantity_ordered").
 		Joins("JOIN products ON orders.product_id = products.id").
 		Group("products.id, products.name").
-		Order("total_quantity_ordered DESC").Find(&res).Error
+		Order("total_quantity_ordered DESC").Limit(10).Find(&res).Error
 	if err != nil {
 		return res, err
 	}

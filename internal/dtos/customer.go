@@ -10,3 +10,12 @@ type Customer struct {
 	Name     string    `json:"name"`
 	Mobile   string    `json:"mobile"`
 }
+
+type Order struct {
+	Id              uuid.UUID
+	CustomerId      uuid.UUID
+	ProductId       uuid.UUID
+	OrderId         string
+	QuantityOrdered int
+	TotalPrice      float64
+}

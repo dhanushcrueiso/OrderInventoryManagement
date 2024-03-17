@@ -26,7 +26,7 @@ func CheckName(c *fiber.Ctx, req string) error {
 }
 
 func SaveUser(c *fiber.Ctx, req dtos.User) error {
-
+	//generting hash for saving password
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
 	if err != nil {
 		return nil
@@ -86,4 +86,21 @@ func DtosToDao(req dtos.User) (models.User, error) {
 		Mobile:   req.Mobile,
 		Name:     req.Name,
 	}, nil
+}
+
+func MostSoldProducts(c *fiber.Ctx) ([]dtos.ProductQuantity, error) {
+	products := []dtos.ProductQuantity{}
+	res, err := daos.ProductAnalytics(c)
+	if err != nil {
+		return products, err
+	}
+	for _, prod := range res {
+		check := dtos.ProductQuantity{
+			ProductID:            prod.ID,
+			Name:                 prod.Name,
+			TotalQuantityOrdered: prod.TotalQuantityOrdered,
+		}
+		products = append(products, check)
+	}
+	return products, nil
 }

@@ -13,12 +13,5 @@ func SetupRoutes(app *fiber.App) {
 	validateToken := middleware.ValidateToken()
 	api := app.Group("/v1")
 	api.Get("/ping", validateToken, handlers.Ping)
-	api.Post("/admins/signup", handlers.Signup)
-	api.Post("/admins/login", handlers.Login)
-	api.Post("/customer/signup", handlers.CustomerSignup)
-	api.Post("/customer/login", handlers.CustomerLogin)
-	api.Get("/products", validateToken, handlers.GetProducts)
-	api.Put("/admin/:aid/product", validateToken, handlers.AddProducts)
-	api.Post("/customer/:cid/placeorder", validateToken, handlers.PlaceOrder)
 
 }

@@ -1,11 +1,9 @@
 package middleware
 
 import (
-	"OrderInventoryManagement/internal/database/daos"
 	"OrderInventoryManagement/internal/dtos"
 	"fmt"
 	"strings"
-	"time"
 
 	"github.com/gofiber/fiber"
 )
@@ -29,13 +27,13 @@ func ValidateToken() fiber.Handler {
 		token := parts[1]
 		fmt.Println(token)
 
-		res, err := daos.GetAccountByToken(token)
-		if err != nil {
-			c.JSON(dtos.Response{Code: fiber.ErrUnauthorized.Code, Message: "no account mapped to the token"})
-		}
-		if res.ExpiresAt.After(time.Now()) {
-			c.JSON(dtos.Response{Code: fiber.ErrUnauthorized.Code, Message: "token expired"})
-		}
+		// res, err := daos.GetAccountByToken(token)
+		// if err != nil {
+		// 	c.JSON(dtos.Response{Code: fiber.ErrUnauthorized.Code, Message: "no account mapped to the token"})
+		// }
+		// if res.ExpiresAt.After(time.Now()) {
+		// 	c.JSON(dtos.Response{Code: fiber.ErrUnauthorized.Code, Message: "token expired"})
+		// }
 		// Proceed to the next middleware/handler
 		c.Next() // No error indicates successful execution
 	}

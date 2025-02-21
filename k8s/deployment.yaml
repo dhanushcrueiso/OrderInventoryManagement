@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ordermanagement-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ordermanagement
+  template:
+    metadata:
+      labels:
+        app: ordermanagement
+    spec:
+      containers:
+      - name: ordermanagement
+        image: ordermanagement:2.1  # Your application image
+        ports:
+        - containerPort: 8080     # Port your application listens on
+        env:
+        - name: ENV                # Environment variable from .env
+          value: "dev"
+        - name: APP_NAME            # Application name from .env
+          value: "order-management"
+        - name: DATABASE_URL       # Database connection string with service name
+          value: "postgresql://postgres:postgres@postgres-service/postgres?sslmode=disable"
+        - name: MAX_DB_CONN         # Max DB connections from .env
+          value: "5"
+        - name: LOG_LEVEL           # Log level from .env
+          value: "DEBUG"
+        - name: TOKEN_LEN           # Token length from .env
+          value: "256"
+        - name: TOKEN_EXPIRY        # Token expiry from .env
+          value: "7776000"
+        - name: SERVICE_TOKEN       # Service token from .env
+          value: "servicetoken"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-service
+  template:
+    metadata:
+      labels:
+        app: postgres-service
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:latest   # Use the official PostgreSQL image
+        ports:
+        - containerPort: 5432       # Default PostgreSQL port
+        env:
+        - name: POSTGRES_USER       # Set environment variables for PostgreSQL configuration
+          value: "postgres"            # The key in the secret containing the username
+        - name: POSTGRES_PASSWORD     # Set the password for PostgreSQL user 
+          value: "postgres"           # The key in the secret containing the password 
+        - name: POSTGRES_DB           # Name of the database to create 
+          value: "postgres"           # Optional database creation
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ordermanagement-service   # Service for your application
+spec:
+  type: NodePort                  # Expose service on a port on each node's IP address
+  ports:
+    - port: 8080                  # Port that the service will expose
+      targetPort: 8080            # Port that the container listens on
+      nodePort: 30001             # NodePort for external access (can be any available port)
+  selector:
+    app: ordermanagement          # This should match the labels defined in the deployment
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-service          # Service for PostgreSQL database
+spec:
+  ports:
+    - port: 5432                  # Expose PostgreSQL port externally (default)
+      targetPort: 5432            # Port that the container listens on 
+  selector:
+    app: postgres-service          # This should match the labels defined in the deployment

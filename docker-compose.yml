@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+                   # Reference to the .env file
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres       # Use variable from .env file
+      POSTGRES_PASSWORD: postgres   # Use variable from .env file
+      POSTGRES_DB: postgres                    # Optional: create a specific database
+    ports:
+      - "5432:5432"                             # Map Postgres port
+
+  app:
+    build: .
+    depends_on:
+      - postgres 
+    image: ordermanagement:2.0  # Replace with your application image name
+    ports:
+      - "8080:8080"           # Map your app's port
+    env_file:
+      - .env

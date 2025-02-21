@@ -1,8 +1,8 @@
 {
     "env": "dev",
     "app_name": "order-management",
-    "port": "3007",
-    "database_url": "postgresql://postgres:postgres@localhost:5432/order_management?sslmode=disable",
+    "port": "8080",
+    "database_url": "postgresql://postgres:postgres@postgres/postgres?sslmode=disable",
     "max_db_conn": 5,
     "log_level": "DEBUG",
     "token_len": 256,
